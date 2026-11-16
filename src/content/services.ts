@@ -8,113 +8,96 @@ export type Service = {
   description: string;
   scope: string[];
   art: ArtVariant;
-  /** Ruta de la foto en /public. Vacío = se muestra el dibujo provisorio. */
   image?: string;
-  /** Aparece en la portada (el brief pide cinco tarjetas). */
   featured: boolean;
 };
 
-/** Catálogo propuesto en el brief. El cliente debe confirmar qué prestaciones realiza. */
+/** Catálogo de servicios presentado al cliente para su validación final. */
 export const services: Service[] = [
   {
     slug: "naves-industriales",
-    title: "Naves y galpones industriales",
+    title: "Naves industriales",
     shortTitle: "Naves industriales",
-    summary: "Montaje de estructuras, cerramientos y cubiertas para naves nuevas, ampliaciones y restauraciones.",
+    summary: "Construcción y montaje de naves industriales, desde la estructura hasta los cerramientos y cubiertas.",
     description:
-      "Ejecutamos naves y galpones industriales según el alcance contratado: desde el montaje de la estructura hasta los cerramientos y la cubierta. También ampliamos y restauramos naves existentes sin detener la operación cuando el proyecto lo permite.",
+      "Ejecutamos naves industriales según el alcance de cada proyecto, integrando el montaje de estructuras, cerramientos y cubiertas. También realizamos ampliaciones y restauraciones de naves existentes.",
     scope: [
-      "Diseño y ejecución según alcance contratado",
       "Montaje de estructuras",
       "Cerramientos laterales y frontales",
       "Cubiertas",
-      "Ampliaciones de naves existentes",
-      "Restauraciones",
+      "Ampliaciones y restauraciones",
     ],
     art: "nave",
+    image: "/images/navesindustriales.jpg",
     featured: true,
   },
   {
-    slug: "estructuras-metalicas",
-    title: "Construcciones y estructuras metálicas",
-    shortTitle: "Estructuras metálicas",
-    summary: "Fabricación y montaje de pórticos, cabriadas, vigas, columnas y entrepisos.",
+    slug: "obras-infraestructura",
+    title: "Obras de infraestructura para empresas",
+    shortTitle: "Infraestructura",
+    summary: "Obras civiles y movimientos de suelo para preparar terrenos y acompañar proyectos empresariales.",
     description:
-      "Fabricamos y montamos estructuras metálicas para la industria y la construcción. Cada pieza sale del taller lista para el montaje en obra, con el equipo y la logística necesarios para estructuras de gran porte.",
+      "Reunimos obras civiles y movimientos de suelo para acompañar proyectos de infraestructura para empresas. El alcance se define según las características del terreno y las necesidades de cada obra.",
     scope: [
-      "Pórticos",
-      "Cabriadas",
-      "Vigas y columnas",
-      "Entrepisos",
-      "Fabricación en taller",
-      "Montaje en obra",
-    ],
-    art: "estructura",
-    featured: true,
-  },
-  {
-    slug: "obras-civiles",
-    title: "Obras civiles e infraestructura",
-    shortTitle: "Obras civiles",
-    summary: "Fundaciones, hormigón, mampostería y obras complementarias de infraestructura.",
-    description:
-      "Resolvemos la obra civil que acompaña a cada proyecto industrial: fundaciones, estructuras de hormigón, mampostería y obras complementarias, coordinadas con el montaje metálico para cumplir los plazos.",
-    scope: [
-      "Fundaciones",
-      "Hormigón armado",
-      "Mampostería",
-      "Obras complementarias",
-      "Infraestructura",
+      "Limpieza, excavación y preparación del terreno",
+      "Nivelación, rellenos y compactación",
+      "Fundaciones y hormigón",
+      "Obras civiles complementarias",
     ],
     art: "civil",
+    image: "/images/civil.jpg",
     featured: true,
   },
   {
-    slug: "movimientos-de-suelo",
-    title: "Movimientos de suelo",
-    shortTitle: "Movimientos de suelo",
-    summary: "Limpieza de terrenos, excavaciones, nivelación, rellenos y compactación.",
+    slug: "canerias-industriales",
+    title: "Cañerías industriales",
+    shortTitle: "Cañerías industriales",
+    summary: "Montaje de cañerías para la industria y sistemas de protección contra incendios.",
     description:
-      "Preparamos el terreno para que la obra arranque sobre una base firme: limpieza, excavaciones, nivelación, rellenos y compactación, con equipos acordes a la superficie y al tipo de suelo.",
+      "Las instalaciones de cañerías industriales se resuelven de acuerdo con las especificaciones de cada proyecto. El servicio contempla también sistemas de protección contra incendios, con alcance y requisitos a definir para cada obra.",
     scope: [
-      "Limpieza de terrenos",
-      "Excavaciones",
-      "Nivelación",
-      "Rellenos",
-      "Compactación",
-      "Preparación de superficies",
+      "Cañerías para instalaciones industriales",
+      "Tendido y montaje según proyecto",
+      "Sistemas de protección contra incendios",
+      "Coordinación con las demás instalaciones de obra",
     ],
-    art: "suelo",
+    art: "estructura",
+    image: "/images/canos.webp",
     featured: true,
   },
   {
-    slug: "techos-y-cubiertas",
-    title: "Techos y cubiertas industriales",
-    shortTitle: "Techos y cubiertas",
-    summary: "Cubiertas nuevas, reemplazo y restauración, aislaciones, canaletas y zinguería.",
+    slug: "zingueria-industrial",
+    title: "Zinguería industrial",
+    shortTitle: "Zinguería industrial",
+    summary: "Piezas de zinguería para resolver encuentros, desagües y terminaciones en cubiertas industriales.",
     description:
-      "Colocamos, reemplazamos y restauramos cubiertas industriales. Incluimos aislaciones, canaletas, zinguería y cerramientos, y ofrecemos mantenimiento para extender la vida útil del techo.",
+      "La zinguería industrial ayuda a proteger cubiertas y cerramientos, conducir el agua y resolver terminaciones. Las piezas y su instalación se definen de acuerdo con el diseño y las condiciones de cada proyecto.",
     scope: [
-      "Cubiertas nuevas",
-      "Reemplazo y restauración",
-      "Aislaciones",
-      "Canaletas y zinguería",
-      "Cerramientos",
-      "Mantenimiento",
+      "Canaletas y desagües pluviales",
+      "Babetas y encuentros",
+      "Remates y terminaciones",
+      "Piezas a medida para cubiertas industriales",
     ],
     art: "techo",
+    image: "/images/zingueria.png",
     featured: true,
   },
   {
-    slug: "demoliciones-y-adecuaciones",
-    title: "Demoliciones y adecuaciones",
-    shortTitle: "Demoliciones",
-    summary: "Demoliciones controladas, retiro de materiales y preparación de obra.",
+    slug: "energia-solar",
+    title: "Energía solar",
+    shortTitle: "Energía solar",
+    summary: "Información y soluciones de energía solar para empresas, según el consumo y las condiciones del sitio.",
     description:
-      "Realizamos demoliciones controladas, retiro de materiales y adecuación del predio para dejarlo listo para la nueva obra, respetando los permisos y protocolos de cada proyecto.",
-    scope: ["Demoliciones controladas", "Retiro de materiales", "Preparación de obra"],
-    art: "demolicion",
-    featured: false,
+      "La energía solar fotovoltaica transforma la radiación solar en electricidad mediante paneles e inversores. La solución se dimensiona considerando el consumo, la superficie disponible y las condiciones de instalación y conexión de cada empresa.",
+    scope: [
+      "Evaluación de consumo y espacio disponible",
+      "Paneles solares fotovoltaicos",
+      "Dimensionamiento según las condiciones del sitio",
+      "Alternativas a definir según el proyecto",
+    ],
+    art: "equipo",
+    image: "/images/solar.jpg",
+    featured: true,
   },
 ];
 

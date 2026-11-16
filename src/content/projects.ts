@@ -59,7 +59,7 @@ export const projects: Project[] = [
   {
     slug: "nave-industrial-santiago",
     title: "Nave industrial",
-    service: "estructuras-metalicas",
+    service: "naves-industriales",
     city: "La Banda",
     province: "Santiago del Estero",
     surface: 4500,
@@ -89,7 +89,7 @@ export const projects: Project[] = [
   {
     slug: "movimiento-de-suelo-parque-industrial",
     title: "Preparación de predio industrial",
-    service: "movimientos-de-suelo",
+    service: "obras-infraestructura",
     city: "Güemes",
     province: "Salta",
     surface: 12000,
@@ -104,7 +104,7 @@ export const projects: Project[] = [
   {
     slug: "recambio-de-cubierta-deposito",
     title: "Recambio de cubierta en depósito",
-    service: "techos-y-cubiertas",
+    service: "zingueria-industrial",
     city: "Yerba Buena",
     province: "Tucumán",
     surface: 1900,
@@ -119,7 +119,7 @@ export const projects: Project[] = [
   {
     slug: "fundaciones-y-platea-jujuy",
     title: "Fundaciones y platea industrial",
-    service: "obras-civiles",
+    service: "obras-infraestructura",
     city: "Palpalá",
     province: "Jujuy",
     surface: 2200,
@@ -134,7 +134,7 @@ export const projects: Project[] = [
   {
     slug: "entrepiso-metalico-tucuman",
     title: "Entrepiso metálico",
-    service: "estructuras-metalicas",
+    service: "naves-industriales",
     city: "Banda del Río Salí",
     province: "Tucumán",
     surface: 650,

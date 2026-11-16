@@ -6,7 +6,7 @@ import { services } from "@/content/services";
 
 export const metadata: Metadata = {
   title: "Obras realizadas",
-  description: "Naves industriales, estructuras metálicas, cubiertas y obras civiles ejecutadas por TODO TECHOS.",
+  description: "Obras de naves industriales, infraestructura y zinguería realizadas por TODO TECHOS.",
   alternates: { canonical: "/obras" },
 };
 

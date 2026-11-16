@@ -9,7 +9,7 @@ import { services } from "@/content/services";
 export const metadata: Metadata = {
   title: "Servicios",
   description:
-    "Naves industriales, estructuras metálicas, obras civiles, movimientos de suelo, techos y cubiertas, demoliciones.",
+    "Naves industriales, infraestructura para empresas, cañerías industriales, zinguería industrial y energía solar.",
   alternates: { canonical: "/servicios" },
 };
 

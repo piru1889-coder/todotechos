@@ -64,11 +64,10 @@ export const Check = (p: P) => (
 /* Íconos de servicio, dibujados a línea como en un plano */
 const servicio: Record<string, string[]> = {
   "naves-industriales": ["M3 21V10l9-5 9 5v11", "M3 21h18", "M9 21v-6h6v6", "M7.500 11.500h9"],
-  "estructuras-metalicas": ["M2 18h20", "M2 18 12 7l10 11", "M12 7v11", "M7 12.500v5.500M17 12.500v5.500", "M7 12.500 12 18l5-5.500"],
-  "obras-civiles": ["M3 20h18", "M3 15h18M3 10h18", "M5 5h14v5H5z", "M9 15v5M15 15v5M12 10v5M7 10v5M17 10v5"],
-  "movimientos-de-suelo": ["M2 20h20", "M2 16c3-3 5 1 8-1s4-5 7-4 3 3 5 3", "M4 11l4-5 3 3", "M8 6l5-2"],
-  "techos-y-cubiertas": ["M2 17 8 6h14l-6 11z", "M7 17 13 6M12 17 18 6", "M2 17h14"],
-  "demoliciones-y-adecuaciones": ["M3 21h18", "M5 21V9l4-2v4l4-2v12", "M16 4l4 4-3 3-4-4z", "M14.500 9.500 11 13"],
+  "obras-infraestructura": ["M3 20h18", "M3 15h18M3 10h18", "M5 5h14v5H5z", "M9 15v5M15 15v5M12 10v5M7 10v5M17 10v5"],
+  "canerias-industriales": ["M4 3v7a3 3 0 0 0 3 3h10a3 3 0 0 1 3 3v5", "M2 3h4M18 21h4", "M7 10V6M17 17v4"],
+  "zingueria-industrial": ["M2 17 8 6h14l-6 11z", "M7 17 13 6M12 17 18 6", "M2 17h14"],
+  "energia-solar": ["M4 10h16l-2 9H6z", "M8 10l1-5h7l1 5", "M9 14v2M13 14v2M17 14v2", "M12 2v1M4 4l1.5 1.5M20 4l-1.5 1.5"],
 };
 
 export const ServicioIcono = ({ slug, ...p }: P & { slug: string }) => (

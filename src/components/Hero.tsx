@@ -84,7 +84,7 @@ export function Hero() {
       </motion.div>
 
       <motion.div
-        className="contenedor relative z-10 flex flex-1 flex-col justify-end pb-10 pt-[calc(var(--header-h)+2.5rem)] md:pb-14"
+        className="contenedor relative z-10 flex flex-1 flex-col justify-end pb-16 pt-[calc(var(--header-h)+2.5rem)] md:pb-20"
         style={{ y: yTexto, opacity: opacidad }}
       >
         <div className="relative pl-[clamp(1.4rem,3.2vw,3.25rem)]">
@@ -93,7 +93,7 @@ export function Hero() {
             className="hero-entra absolute bottom-[0.6rem] left-0 top-[0.4rem] w-[clamp(0.6rem,1.3vw,1.25rem)] origin-bottom -skew-x-[14deg] bg-verde-luz"
             style={{ "--i": 0 } as CSSProperties}
           />
-          <h1 className="display text-[clamp(3.4rem,11.5vw,10.5rem)]">
+          <h1 className="display text-[clamp(2.5rem,7vw,6.5rem)]">
             {site.hero.titleLines.map((linea, i) => (
               <span key={linea} className="hero-linea">
                 <span style={{ "--i": i } as CSSProperties} className={i === 1 ? "text-[0.62em] font-semibold tracking-[0.01em] text-white/90" : ""}>

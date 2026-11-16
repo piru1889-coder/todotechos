@@ -16,8 +16,6 @@ export type MediaSlot = {
 export const mediaSlots: MediaSlot[] = [
   { key: "brand.logo", section: "Identidad", label: "Logo del sitio", defaultFit: "contain" },
   { key: "hero.poster", section: "Inicio", label: "Imagen alternativa del hero", defaultFit: "contain" },
-  { key: "home.about", section: "Inicio", label: "Imagen de presentación", defaultFit: "contain" },
-  { key: "empresa.about", section: "Empresa", label: "Imagen de presentación", defaultFit: "contain" },
   ...infrastructure.map((item) => ({
     key: `infra.${slugForMedia(item.title)}`,
     section: "Infraestructura",
@@ -28,6 +26,7 @@ export const mediaSlots: MediaSlot[] = [
     key: `service.${service.slug}`,
     section: "Servicios",
     label: service.title,
+    fallback: service.image,
     defaultFit: "cover" as const,
   })),
   ...projects.flatMap((project) => [

@@ -78,16 +78,10 @@ export function Header() {
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Escribir por WhatsApp"
-            className={`hidden h-11 w-11 place-items-center transition-colors sm:grid ${
-              clara ? "text-verde hover:bg-chapa" : "text-white hover:bg-white/15"
-            }`}
+            className="btn btn-verde !hidden !min-h-11 !px-5 !text-base sm:!inline-flex"
           >
-            <WhatsApp />
+            <WhatsApp width={20} height={20} /> Solicitar cotización
           </a>
-          <Link href="/contacto" className="btn btn-verde !hidden !min-h-11 !px-5 !text-base sm:!inline-flex">
-            Solicitar cotización
-          </Link>
           <button
             type="button"
             aria-expanded={abierto}
@@ -153,13 +147,16 @@ export function Header() {
           </ul>
         </nav>
         <div className="contenedor grid gap-3 pb-8">
-          <Link href="/contacto" onClick={() => setAbierto(false)} className="btn btn-verde w-full">
-            Solicitar cotización
-          </Link>
+          <a
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => setAbierto(false)}
+            className="btn btn-verde w-full"
+          >
+            <WhatsApp width={20} height={20} /> Solicitar cotización
+          </a>
           <div className="grid grid-cols-2 gap-3">
-            <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="btn btn-linea">
-              <WhatsApp width={20} height={20} /> WhatsApp
-            </a>
             <a href={site.contact.phoneHref} className="btn btn-linea">
               <Telefono width={20} height={20} /> Llamar
             </a>

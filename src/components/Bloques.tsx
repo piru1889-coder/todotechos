@@ -76,12 +76,14 @@ export function CtaBand({ titulo = "¿Tenés un proyecto industrial o civil?" }:
             Contanos qué necesitás construir y dónde. Analizamos tu caso y te respondemos con una propuesta.
           </p>
         </div>
-        <div className="flex flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row">
-          <Link href="/contacto" className="btn bg-white text-verde-hondo after:bg-tinta hover:text-white focus-visible:text-white">
-            Solicitar cotización <Flecha />
-          </Link>
-          <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="btn btn-linea">
-            <WhatsApp width={22} height={22} /> WhatsApp
+        <div>
+          <a
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn bg-white text-verde-hondo after:bg-tinta hover:text-white focus-visible:text-white"
+          >
+            <WhatsApp width={22} height={22} /> Solicitar cotización <Flecha />
           </a>
         </div>
       </div>

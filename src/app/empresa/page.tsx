@@ -48,7 +48,7 @@ export default function Empresa() {
             </ul>
           </Reveal>
           <Reveal modo="descubre" className="corte-techo">
-            <Photo slot="empresa.about" fit="contain" alt="Equipo de TODO TECHOS en obra" variant="nave" className="aspect-[5/4] w-full" />
+            <Photo src="/images/nosotros.png" fit="cover" alt="Equipo de TODO TECHOS junto a vehículos de trabajo" variant="nave" className="aspect-[5/4] w-full" />
           </Reveal>
         </div>
       </section>

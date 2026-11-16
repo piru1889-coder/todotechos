@@ -9,7 +9,7 @@ export const site = {
   tagline: "Construcciones & Metalúrgica",
   url: "https://www.todotechos.com.ar",
   description:
-    "Construcciones metálicas, infraestructura, obras civiles y movimientos de suelo. Soluciones para proyectos industriales y de gran escala.",
+    "Naves industriales, obras de infraestructura, cañerías industriales, zinguería y energía solar para empresas.",
   /** Mientras sea true se muestra el aviso de "contenido de muestra" en el pie. */
   demo: true,
   year: 2026,
@@ -18,14 +18,17 @@ export const site = {
     /** El video queda como archivo estático; solo su imagen alternativa se administra en el panel. */
     video: "/videos/hero.mp4",
     poster: "/videos/hero-poster.jpg",
-    titleLines: ["Más de 60 años", "de trayectoria"],
+    titleLines: [
+      "INGENIERÍA Y CONSTRUCCIÓN DE ",
+      " NAVES LOGÍSTICAS E INDUSTRIALES",
+    ],
     subtitle:
-      "Construcciones metálicas, infraestructura, obras civiles y movimientos de suelo. Soluciones para proyectos industriales y de gran escala.",
+      'Soluciones "llave en mano" respaldadas por más de 60 años de experiencia en el sector industrial.',
   },
 
   about: {
     intro:
-      "En TODO TECHOS desarrollamos soluciones constructivas para el sector industrial y civil, integrando experiencia, capacidad operativa y compromiso con cada proyecto. Nuestra actividad abarca estructuras metálicas, cubiertas, obras civiles y movimientos de suelo.",
+      "En TODO TECHOS desarrollamos soluciones para proyectos industriales y empresariales, integrando experiencia, capacidad operativa y compromiso con cada obra. Nuestros servicios abarcan naves, infraestructura, cañerías, zinguería y energía solar.",
   },
 
   contact: {
@@ -36,8 +39,10 @@ export const site = {
     email: "info@todotechos.com.ar",
     address: "San Miguel de Tucumán",
     province: "Tucumán, Argentina",
-    mapsUrl: "https://www.google.com/maps/search/?api=1&query=San+Miguel+de+Tucuman",
-    mapsEmbed: "https://www.google.com/maps?q=San+Miguel+de+Tucuman&z=12&output=embed",
+    mapsUrl:
+      "https://www.google.com/maps/search/?api=1&query=San+Miguel+de+Tucuman",
+    mapsEmbed:
+      "https://www.google.com/maps?q=San+Miguel+de+Tucuman&z=12&output=embed",
     instagram: "https://www.instagram.com/todotechos",
     instagramHandle: "@todotechos",
   },
@@ -51,8 +56,6 @@ export const nav = [
   { href: "/", label: "Inicio" },
   { href: "/empresa", label: "Empresa" },
   { href: "/servicios", label: "Servicios" },
-  { href: "/obras", label: "Obras" },
-  { href: "/infraestructura", label: "Infraestructura" },
   { href: "/clientes", label: "Clientes" },
   { href: "/contacto", label: "Contacto" },
 ] as const;
