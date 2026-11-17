@@ -36,6 +36,7 @@ export function getMysqlPool() {
 }
 
 let schemaReady: Promise<void> | undefined;
+let workplaceSchemaReady: Promise<void> | undefined;
 
 export async function ensureMediaTable() {
   if (!schemaReady) {
@@ -44,7 +45,7 @@ export async function ensureMediaTable() {
         CREATE TABLE IF NOT EXISTS site_media (
           slot_key VARCHAR(190) NOT NULL PRIMARY KEY,
           content_type VARCHAR(32) NOT NULL,
-          file_data MEDIUMBLOB NOT NULL,
+          file_data LONGBLOB NOT NULL,
           fit_mode ENUM('cover', 'contain') NOT NULL DEFAULT 'cover',
           updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
@@ -58,7 +59,15 @@ export async function ensureMediaTable() {
             "ALTER TABLE site_media ADD COLUMN fit_mode ENUM('cover', 'contain') NOT NULL DEFAULT 'cover' AFTER file_data",
           );
           await getMysqlPool().execute(
-            "UPDATE site_media SET fit_mode = 'contain' WHERE slot_key IN ('brand.logo', 'hero.poster', 'home.about', 'empresa.about') OR slot_key LIKE 'client.%'",
+            "UPDATE site_media SET fit_mode = 'contain' WHERE slot_key IN ('brand.logo', 'hero.poster') OR slot_key LIKE 'client.%'",
+          );
+        }
+        const [fileColumns] = await getMysqlPool().query<RowDataPacket[]>(
+          "SELECT DATA_TYPE FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'site_media' AND COLUMN_NAME = 'file_data'",
+        );
+        if (fileColumns[0]?.DATA_TYPE !== "longblob") {
+          await getMysqlPool().execute(
+            "ALTER TABLE site_media MODIFY file_data LONGBLOB NOT NULL",
           );
         }
       })
@@ -70,4 +79,25 @@ export async function ensureMediaTable() {
   }
 
   await schemaReady;
+}
+
+export async function ensureWorkplaceTable() {
+  if (!workplaceSchemaReady) {
+    workplaceSchemaReady = getMysqlPool()
+      .execute(`
+        CREATE TABLE IF NOT EXISTS site_workplaces (
+          workplace_key VARCHAR(80) NOT NULL PRIMARY KEY,
+          title VARCHAR(190) NOT NULL,
+          location VARCHAR(255) NOT NULL,
+          updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
+      `)
+      .then(() => undefined)
+      .catch((error: unknown) => {
+        workplaceSchemaReady = undefined;
+        throw error;
+      });
+  }
+
+  await workplaceSchemaReady;
 }

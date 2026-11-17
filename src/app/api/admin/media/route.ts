@@ -3,14 +3,19 @@ import type { RowDataPacket } from "mysql2";
 import { isAdminSessionValid, isSameOrigin } from "@/lib/admin-auth";
 import { ensureMediaTable, getMysqlPool, isMysqlConfigured } from "@/lib/media-db";
 import { mediaSlots, getMediaSlot } from "@/lib/media-slots";
+import { getWorkplacesWithOverrides } from "@/lib/workplace-content";
 
-const MAX_FILE_SIZE = 8 * 1024 * 1024;
+const MAX_IMAGE_FILE_SIZE = 8 * 1024 * 1024;
+const MAX_VIDEO_FILE_SIZE = 50 * 1024 * 1024;
 interface MediaSummaryRow extends RowDataPacket {
   slot_key: string;
   content_type: string;
   byte_size: number;
   fit_mode: "cover" | "contain";
   updated_at: Date;
+  workplace_key: string | null;
+  title: string | null;
+  location: string | null;
 }
 
 const MIME_SIGNATURES: Record<string, (bytes: Uint8Array) => boolean> = {
@@ -29,6 +34,8 @@ const MIME_SIGNATURES: Record<string, (bytes: Uint8Array) => boolean> = {
     bytes.length >= 12 &&
     String.fromCharCode(...bytes.slice(0, 4)) === "RIFF" &&
     String.fromCharCode(...bytes.slice(8, 12)) === "WEBP",
+  "video/mp4": (bytes) =>
+    bytes.length >= 12 && String.fromCharCode(...bytes.slice(4, 8)) === "ftyp",
 };
 
 function unauthorized() {
@@ -47,13 +54,19 @@ export async function GET(request: Request) {
       "SELECT slot_key, content_type, OCTET_LENGTH(file_data) AS byte_size, fit_mode, updated_at FROM site_media",
     );
     const saved = new Map(rows.map((row) => [row.slot_key, row]));
+    const workplaceDetails = await getWorkplacesWithOverrides();
     return NextResponse.json({
-      slots: mediaSlots.map((slot) => {
+      slots: mediaSlots.filter((slot) => slot.showInAdmin !== false).map((slot) => {
         const row = saved.get(slot.key);
         return {
           key: slot.key,
           section: slot.section,
           label: slot.label,
+          mediaType: slot.mediaType ?? "image",
+          recommendedSize: slot.recommendedSize ?? "1200 × 900 px",
+          formatHelp: slot.formatHelp ?? "JPG, PNG o WebP; hasta 8 MB.",
+          workplaceKey: slot.workplaceKey ?? null,
+          imageNumber: slot.imageNumber ?? null,
           fallback: slot.fallback ?? null,
           uploaded: Boolean(row),
           contentType: row?.content_type ?? null,
@@ -62,6 +75,7 @@ export async function GET(request: Request) {
           updatedAt: row?.updated_at?.toISOString() ?? null,
         };
       }),
+      workplaces: workplaceDetails,
     });
   } catch (error) {
     console.error("[admin/media] No se pudieron listar las imágenes.", error);
@@ -78,8 +92,8 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "MySQL todavía no está configurado." }, { status: 503 });
   }
   const contentLength = Number(request.headers.get("content-length") || 0);
-  if (contentLength > MAX_FILE_SIZE + 64 * 1024) {
-    return NextResponse.json({ error: "La imagen supera el límite de 8 MB." }, { status: 413 });
+  if (contentLength > MAX_VIDEO_FILE_SIZE + 64 * 1024) {
+    return NextResponse.json({ error: "El archivo supera el límite de 50 MB." }, { status: 413 });
   }
 
   let form: FormData;
@@ -92,15 +106,22 @@ export async function POST(request: Request) {
   const key = form.get("key");
   const file = form.get("file");
   const requestedFit = form.get("fitMode");
-  if (typeof key !== "string" || !getMediaSlot(key) || !(file instanceof File)) {
-    return NextResponse.json({ error: "Seleccioná una ubicación y una imagen válida." }, { status: 400 });
+  const slot = typeof key === "string" ? getMediaSlot(key) : undefined;
+  if (!slot || !(file instanceof File)) {
+    return NextResponse.json({ error: "Seleccioná una ubicación y un archivo válido." }, { status: 400 });
   }
-  if (file.size === 0 || file.size > MAX_FILE_SIZE) {
-    return NextResponse.json({ error: "La imagen debe pesar hasta 8 MB." }, { status: 413 });
+  const maxFileSize = slot.mediaType === "video" ? MAX_VIDEO_FILE_SIZE : MAX_IMAGE_FILE_SIZE;
+  if (file.size === 0 || file.size > maxFileSize) {
+    return NextResponse.json({
+      error: slot.mediaType === "video" ? "El video debe pesar hasta 50 MB." : "La imagen debe pesar hasta 8 MB.",
+    }, { status: 413 });
   }
-  const signatureMatches = MIME_SIGNATURES[file.type];
+  const allowedTypes = slot.mediaType === "video" ? ["video/mp4"] : ["image/jpeg", "image/png", "image/webp"];
+  const signatureMatches = allowedTypes.includes(file.type) ? MIME_SIGNATURES[file.type] : undefined;
   if (!signatureMatches) {
-    return NextResponse.json({ error: "Formato no permitido. Usá JPG, PNG o WebP." }, { status: 415 });
+    return NextResponse.json({
+      error: slot.mediaType === "video" ? "Formato no permitido. Usá MP4." : "Formato no permitido. Usá JPG, PNG o WebP.",
+    }, { status: 415 });
   }
 
   const bytes = new Uint8Array(await file.arrayBuffer());

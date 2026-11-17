@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import type { Workplace } from "@/content/workplaces";
 import { Pin } from "./Icons";
 
@@ -11,13 +11,17 @@ export function WorkplaceCarousel({ workplace }: { workplace: Workplace }) {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const activeRef = useRef(0);
   const dialogRef = useRef<HTMLDialogElement>(null);
+  const imageUrl = useCallback(
+    (index: number) => `/api/media/${encodeURIComponent(`workplace.${workplace.key}.${index + 1}`)}`,
+    [workplace.key],
+  );
 
   useEffect(() => {
     if (workplace.images.length < 2) return;
     let transitionTimeout: number | undefined;
     const preload = (index: number) => {
       const image = new window.Image();
-      image.src = workplace.images[index];
+      image.src = imageUrl(index);
     };
     preload(1);
 
@@ -36,7 +40,7 @@ export function WorkplaceCarousel({ workplace }: { workplace: Workplace }) {
       window.clearInterval(interval);
       window.clearTimeout(transitionTimeout);
     };
-  }, [workplace.images]);
+  }, [imageUrl, workplace.images]);
 
   useEffect(() => {
     const dialog = dialogRef.current;
@@ -62,20 +66,22 @@ export function WorkplaceCarousel({ workplace }: { workplace: Workplace }) {
         <div className="relative aspect-[4/3] overflow-hidden bg-[#232b2f]">
           {previous !== null && (
             <Image
-              src={workplace.images[previous]}
+              src={imageUrl(previous)}
               alt=""
               fill
               sizes="(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw"
+              unoptimized
               aria-hidden
               className="object-cover"
             />
           )}
           <Image
-            key={workplace.images[active]}
-            src={workplace.images[active]}
+            key={imageUrl(active)}
+            src={imageUrl(active)}
             alt={`${workplace.title}, ${workplace.location}`}
             fill
             sizes="(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw"
+            unoptimized
             className="animate-[workplace-fade_700ms_ease-out] object-cover transition-transform duration-700 group-hover:scale-[1.03]"
           />
         </div>
@@ -113,11 +119,12 @@ export function WorkplaceCarousel({ workplace }: { workplace: Workplace }) {
             </div>
             <div className="relative min-h-0 flex-1">
               <Image
-                key={workplace.images[lightboxIndex]}
-                src={workplace.images[lightboxIndex]}
+                key={imageUrl(lightboxIndex)}
+                src={imageUrl(lightboxIndex)}
                 alt={`${workplace.title}, ${workplace.location}`}
                 fill
                 sizes="100vw"
+                unoptimized
                 className="object-contain"
                 priority
               />

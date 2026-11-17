@@ -18,17 +18,53 @@ interface MediaFitRow extends RowDataPacket {
   fit_mode: "cover" | "contain";
 }
 
-function imageResponse(data: Uint8Array, contentType: string) {
-  const body = new ArrayBuffer(data.byteLength);
-  new Uint8Array(body).set(data);
+function mediaResponse(data: Uint8Array, contentType: string, request: Request) {
+  const range = request.headers.get("range");
+  let start = 0;
+  let end = data.byteLength - 1;
+  let status = 200;
+
+  if (range) {
+    const match = /^bytes=(\d*)-(\d*)$/.exec(range);
+    if (!match || (!match[1] && !match[2])) {
+      return new Response(null, {
+        status: 416,
+        headers: { "Content-Range": `bytes */${data.byteLength}` },
+      });
+    }
+
+    if (match[1]) {
+      start = Number(match[1]);
+      end = match[2] ? Number(match[2]) : end;
+    } else {
+      const suffixLength = Number(match[2]);
+      start = Math.max(0, data.byteLength - suffixLength);
+    }
+    if (start >= data.byteLength || end < start) {
+      return new Response(null, {
+        status: 416,
+        headers: { "Content-Range": `bytes */${data.byteLength}` },
+      });
+    }
+    end = Math.min(end, data.byteLength - 1);
+    status = 206;
+  }
+
+  const body = new Uint8Array(end - start + 1);
+  body.set(data.subarray(start, end + 1));
+  const headers = new Headers({
+    "Content-Type": contentType,
+    "Content-Length": String(body.byteLength),
+    "Cache-Control": "no-store",
+    "X-Content-Type-Options": "nosniff",
+    "Content-Disposition": "inline",
+    "Accept-Ranges": "bytes",
+  });
+  if (status === 206) headers.set("Content-Range", `bytes ${start}-${end}/${data.byteLength}`);
 
   return new Response(body, {
-    headers: {
-      "Content-Type": contentType,
-      "Cache-Control": "no-store",
-      "X-Content-Type-Options": "nosniff",
-      "Content-Disposition": "inline",
-    },
+    status,
+    headers,
   });
 }
 
@@ -56,6 +92,7 @@ export async function GET(
       return Response.json(
         {
           fitMode: slot.defaultFit,
+          uploaded: false,
         },
         {
           headers: {
@@ -76,6 +113,7 @@ export async function GET(
       return Response.json(
         {
           fitMode: rows[0]?.fit_mode ?? slot.defaultFit,
+          uploaded: Boolean(rows[0]),
         },
         {
           headers: {
@@ -96,6 +134,7 @@ export async function GET(
       return Response.json(
         {
           fitMode: slot.defaultFit,
+          uploaded: false,
         },
         {
           headers: {
@@ -123,9 +162,10 @@ export async function GET(
       );
 
       if (rows[0]) {
-        return imageResponse(
+        return mediaResponse(
           new Uint8Array(rows[0].file_data),
           rows[0].content_type,
+          request,
         );
       }
     } catch (error) {
@@ -161,7 +201,9 @@ export async function GET(
         ?.toLowerCase();
 
       const contentType =
-        extension === "svg"
+        extension === "mp4"
+          ? "video/mp4"
+          : extension === "svg"
           ? "image/svg+xml"
           : extension === "jpg" || extension === "jpeg"
             ? "image/jpeg"
@@ -169,9 +211,10 @@ export async function GET(
               ? "image/webp"
               : "image/png";
 
-      return imageResponse(
+      return mediaResponse(
         new Uint8Array(file),
         contentType,
+        request,
       );
     } catch (error) {
       console.error(

@@ -95,6 +95,7 @@ export default function Inicio() {
           <div className="relative">
             <Reveal modo="descubre" className="corte-techo">
               <Photo
+                slot="home.about"
                 src="/images/nosotros.png"
                 fit="cover"
                 alt="Equipo de TODO TECHOS junto a vehículos de trabajo"

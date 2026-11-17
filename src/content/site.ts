@@ -16,8 +16,8 @@ export const site = {
 
   hero: {
     /** El video queda como archivo estático; solo su imagen alternativa se administra en el panel. */
-    video: "/videos/hero.mp4",
-    poster: "/videos/hero-poster.jpg",
+    video: "/api/media/hero.video",
+    poster: "/api/media/hero.poster",
     titleLines: [
       "INGENIERÍA Y CONSTRUCCIÓN DE ",
       " NAVES LOGÍSTICAS E INDUSTRIALES",

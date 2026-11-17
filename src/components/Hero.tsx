@@ -73,7 +73,7 @@ export function Hero() {
           loop
           playsInline
           preload="auto"
-          poster="/api/media/hero.poster"
+          poster={site.hero.poster}
           onCanPlay={() => setVideoListo(true)}
         >
           <source src={site.hero.video} type="video/mp4" />

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { ClientsMarquee, CtaBand, PageHero } from "@/components/Bloques";
 import { Reveal } from "@/components/Reveal";
-import { WorkplaceCarousel } from "@/components/WorkplaceCarousel";
+import { WorkplacesGallery } from "@/components/WorkplacesGallery";
 import { workplaces } from "@/content/workplaces";
 
 export const metadata: Metadata = {
@@ -26,13 +26,7 @@ export default function Clientes() {
           <h2 id="t-casos" className="titulo titulo-barra">
             Trabajos realizados
           </h2>
-          <div className="mt-10 grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
-            {workplaces.map((workplace, i) => (
-              <Reveal key={workplace.title} demora={i * 70}>
-                <WorkplaceCarousel workplace={workplace} />
-              </Reveal>
-            ))}
-          </div>
+          <WorkplacesGallery initialWorkplaces={workplaces} />
         </div>
       </section>
 
