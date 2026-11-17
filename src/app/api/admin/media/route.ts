@@ -3,7 +3,6 @@ import type { RowDataPacket } from "mysql2";
 import { isAdminSessionValid, isSameOrigin } from "@/lib/admin-auth";
 import { ensureMediaTable, getMysqlPool, isMysqlConfigured } from "@/lib/media-db";
 import { mediaSlots, getMediaSlot } from "@/lib/media-slots";
-import { getWorkplacesWithOverrides } from "@/lib/workplace-content";
 
 const MAX_IMAGE_FILE_SIZE = 8 * 1024 * 1024;
 const MAX_VIDEO_FILE_SIZE = 50 * 1024 * 1024;
@@ -54,7 +53,6 @@ export async function GET(request: Request) {
       "SELECT slot_key, content_type, OCTET_LENGTH(file_data) AS byte_size, fit_mode, updated_at FROM site_media",
     );
     const saved = new Map(rows.map((row) => [row.slot_key, row]));
-    const workplaceDetails = await getWorkplacesWithOverrides();
     return NextResponse.json({
       slots: mediaSlots.filter((slot) => slot.showInAdmin !== false).map((slot) => {
         const row = saved.get(slot.key);
@@ -75,11 +73,18 @@ export async function GET(request: Request) {
           updatedAt: row?.updated_at?.toISOString() ?? null,
         };
       }),
-      workplaces: workplaceDetails,
     });
   } catch (error) {
     console.error("[admin/media] No se pudieron listar las imágenes.", error);
-    return NextResponse.json({ error: "No se pudieron cargar las imágenes desde MySQL." }, { status: 503 });
+    const code =
+      typeof error === "object" && error !== null && "code" in error && typeof error.code === "string"
+        ? error.code
+        : "";
+    const detail = /^[A-Z0-9_]+$/.test(code) ? ` Código: ${code}.` : "";
+    return NextResponse.json(
+      { error: `No se pudieron cargar las imágenes desde MySQL.${detail} Revisá los registros de runtime del hosting.` },
+      { status: 503 },
+    );
   }
 }
 

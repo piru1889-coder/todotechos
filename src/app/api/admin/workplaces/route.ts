@@ -1,7 +1,26 @@
 import { NextResponse } from "next/server";
 import { isAdminSessionValid, isSameOrigin } from "@/lib/admin-auth";
+import { isMysqlConfigured } from "@/lib/media-db";
 import { workplaces } from "@/content/workplaces";
-import { saveWorkplaceDetails } from "@/lib/workplace-content";
+import { getWorkplacesWithOverrides, saveWorkplaceDetails } from "@/lib/workplace-content";
+
+export async function GET(request: Request) {
+  if (!isAdminSessionValid(request)) {
+    return NextResponse.json({ error: "Iniciá sesión para continuar." }, { status: 401 });
+  }
+  if (!isMysqlConfigured()) {
+    return NextResponse.json({ error: "MySQL todavía no está configurado." }, { status: 503 });
+  }
+
+  try {
+    return NextResponse.json(await getWorkplacesWithOverrides(), {
+      headers: { "Cache-Control": "no-store" },
+    });
+  } catch (error) {
+    console.error("[admin/workplaces] No se pudieron cargar los datos de las obras.", error);
+    return NextResponse.json({ error: "No se pudieron cargar los nombres y ubicaciones de las obras desde MySQL." }, { status: 503 });
+  }
+}
 
 export async function PUT(request: Request) {
   if (!isSameOrigin(request)) {

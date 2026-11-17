@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState, type FormEvent } from "react";
-import type { Workplace } from "@/content/workplaces";
+import { workplaces as defaultWorkplaces, type Workplace } from "@/content/workplaces";
 
 type MediaSlot = {
   key: string;
@@ -37,20 +37,31 @@ export default function AdminPage() {
 
   const loadSlots = useCallback(async () => {
     try {
-      const response = await fetch("/api/admin/media", { cache: "no-store" });
-      const result = await response.json();
-      if (response.status === 401) {
+      const [mediaResponse, workplacesResponse] = await Promise.all([
+        fetch("/api/admin/media", { cache: "no-store" }),
+        fetch("/api/admin/workplaces", { cache: "no-store" }),
+      ]);
+      const [result, workplaceResult] = await Promise.all([
+        mediaResponse.json(),
+        workplacesResponse.json(),
+      ]);
+      if (mediaResponse.status === 401 || workplacesResponse.status === 401) {
         setAuthenticated(false);
         return;
       }
       setAuthenticated(true);
-      if (!response.ok) {
+      if (!mediaResponse.ok) {
         setMessage(result.error || "No se pudieron cargar las imágenes.");
         return;
       }
-      setMessage("");
       setSlots(result.slots as MediaSlot[]);
-      setWorkplaces(result.workplaces as Workplace[]);
+      if (workplacesResponse.ok) {
+        setWorkplaces(workplaceResult as Workplace[]);
+        setMessage("");
+      } else {
+        setWorkplaces(defaultWorkplaces);
+        setMessage(`Las imágenes se cargaron, pero no los datos de las obras. ${workplaceResult.error || ""}`.trim());
+      }
     } catch {
       setAuthenticated(false);
       setMessage("No se pudo conectar con el servidor. Intentá nuevamente.");
