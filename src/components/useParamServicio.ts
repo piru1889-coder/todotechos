@@ -4,7 +4,7 @@ import { useSyncExternalStore } from "react";
 
 const sinCambios = () => () => {};
 
-/** Lee ?servicio= de la URL (p. ej. /obras?servicio=naves-industriales) sin romper el prerender. */
+/** Lee el servicio seleccionado desde la URL sin romper el prerender. */
 export function useParamServicio(validos: { value: string }[]) {
   const param = useSyncExternalStore(
     sinCambios,

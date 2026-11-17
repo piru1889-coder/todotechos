@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { ClientSlot, CtaBand, PageHero, ProjectCard } from "@/components/Bloques";
-import { Flecha } from "@/components/Icons";
+import { ClientsMarquee, CtaBand, PageHero } from "@/components/Bloques";
 import { Reveal } from "@/components/Reveal";
-import { clients } from "@/content/company";
-import { projects } from "@/content/projects";
+import { WorkplaceCarousel } from "@/components/WorkplaceCarousel";
+import { workplaces } from "@/content/workplaces";
 
 export const metadata: Metadata = {
   title: "Clientes",
@@ -13,46 +11,25 @@ export const metadata: Metadata = {
 };
 
 export default function Clientes() {
-  const casos = projects.filter((p) => p.featured).slice(0, 3);
   return (
     <>
       <PageHero titulo="Clientes" bajada="Empresas e industrias con las que trabajamos." />
 
-      <section className="seccion">
-        <div className="contenedor">
-          <ul className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
-            {clients.map((c, i) => (
-              <Reveal as="li" key={c.name} demora={(i % 4) * 70}>
-                {c.project ? (
-                  <Link href={`/obras/${c.project}`} aria-label={`Ver obra realizada para ${c.name}`} className="block transition-shadow hover:shadow-[0_0_0_2px_var(--color-verde)]">
-                    <ClientSlot {...c} />
-                  </Link>
-                ) : (
-                  <ClientSlot {...c} />
-                )}
-              </Reveal>
-            ))}
-          </ul>
-          <p className="mt-6 max-w-[62ch] text-[0.9375rem] text-acero">
-            Publicamos únicamente logos originales de clientes que autorizaron su exhibición.
-          </p>
-        </div>
+      <section className="pb-16 pt-12" aria-label="Empresas e industrias clientes">
+        <Reveal>
+          <ClientsMarquee />
+        </Reveal>
       </section>
 
       <section className="seccion bg-chapa-clara" aria-labelledby="t-casos">
         <div className="contenedor">
-          <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
-            <h2 id="t-casos" className="titulo titulo-barra">
-              Trabajos realizados
-            </h2>
-            <Link href="/obras" className="enlace shrink-0">
-              Ver todas las obras <Flecha />
-            </Link>
-          </div>
-          <div className="mt-10 grid gap-x-6 gap-y-10 md:grid-cols-2 lg:grid-cols-3">
-            {casos.map((p, i) => (
-              <Reveal key={p.slug} demora={i * 100}>
-                <ProjectCard p={p} sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw" />
+          <h2 id="t-casos" className="titulo titulo-barra">
+            Trabajos realizados
+          </h2>
+          <div className="mt-10 grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+            {workplaces.map((workplace, i) => (
+              <Reveal key={workplace.title} demora={i * 70}>
+                <WorkplaceCarousel workplace={workplace} />
               </Reveal>
             ))}
           </div>

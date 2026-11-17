@@ -1,12 +1,9 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { clients } from "@/content/company";
-import { formatSurface, type Project } from "@/content/projects";
-import { getService } from "@/content/services";
 import { whatsappUrl } from "@/content/site";
 import { slugForMedia } from "@/lib/slug";
-import { Flecha, Pin, WhatsApp } from "./Icons";
-import { Photo } from "./Photo";
+import { Flecha, WhatsApp } from "./Icons";
 
 /** Encabezado de las páginas interiores. */
 export function PageHero({
@@ -88,36 +85,6 @@ export function CtaBand({ titulo = "¿Tenés un proyecto industrial o civil?" }:
         </div>
       </div>
     </section>
-  );
-}
-
-export function ProjectCard({ p, className = "", sizes }: { p: Project; className?: string; sizes?: string }) {
-  const servicio = getService(p.service);
-  return (
-    <Link href={`/obras/${p.slug}`} className={`obra-card group block ${className}`}>
-      <div className="relative">
-        <Photo slot={`project.${p.slug}`} src={p.image} alt={`${p.title}, ${p.province}`} variant={p.art} className="aspect-[4/3] w-full" innerClassName="obra-foto" sizes={sizes} />
-        {servicio && (
-          <span className="absolute left-0 top-0 bg-verde px-3 py-1.5 font-display text-[0.9375rem] font-semibold uppercase tracking-wide text-white [clip-path:polygon(0_0,100%_0,calc(100%-10px)_100%,0_100%)] pr-5">
-            {servicio.shortTitle}
-          </span>
-        )}
-      </div>
-      <div className="flex items-start justify-between gap-4 border-b-2 border-linea pb-4 pt-4 transition-colors duration-300 group-hover:border-verde">
-        <div>
-          <h3 className="font-display text-[1.625rem] font-bold uppercase leading-[1.05]">{p.title}</h3>
-          <p className="mt-1.5 flex items-center gap-1.5 text-acero">
-            <Pin width={17} height={17} className="shrink-0 text-verde" />
-            {p.city}, {p.province}
-          </p>
-        </div>
-        {p.surface && (
-          <p className="shrink-0 pt-0.5 text-right font-display text-[1.375rem] font-semibold leading-none text-verde">
-            {formatSurface(p.surface)}
-          </p>
-        )}
-      </div>
-    </Link>
   );
 }
 

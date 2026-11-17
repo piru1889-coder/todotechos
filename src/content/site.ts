@@ -32,17 +32,17 @@ export const site = {
   },
 
   contact: {
-    phone: "+54 381 000 0000",
-    phoneHref: "tel:+543810000000",
-    whatsapp: "5493810000000",
+    phone: "+54 381 448-1270",
+    phoneHref: "tel:+543814481270",
+    whatsapp: "5493814481270",
     whatsappMessage: "Hola, quiero consultar por un proyecto para TODO TECHOS",
     email: "info@todotechos.com.ar",
-    address: "San Miguel de Tucumán",
+    address: "Av. Ejército del Norte 1890",
     province: "Tucumán, Argentina",
     mapsUrl:
-      "https://www.google.com/maps/search/?api=1&query=San+Miguel+de+Tucuman",
+      "https://www.google.com/maps/search/?api=1&query=Av.+Ej%C3%A9rcito+del+Norte+1890%2C+Tucum%C3%A1n%2C+Argentina",
     mapsEmbed:
-      "https://www.google.com/maps?q=San+Miguel+de+Tucuman&z=12&output=embed",
+      "https://www.google.com/maps?q=Av.+Ej%C3%A9rcito+del+Norte+1890%2C+Tucum%C3%A1n%2C+Argentina&z=16&output=embed",
     instagram: "https://www.instagram.com/todotechos",
     instagramHandle: "@todotechos",
   },
@@ -65,8 +65,18 @@ export const nav = [
  * por eso hay una sola cifra (a confirmar) y el resto son ventajas cualitativas.
  */
 export const indicators = [
-  { value: 60, prefix: "+", suffix: "", label: "años de trayectoria" },
-  { text: "Taller propio", label: "fabricación y montaje con equipo de la empresa" },
+  {
+    value: "Soluciones a medida",
+    label:
+      "Adaptamos cada proyecto a las necesidades específicas de cada cliente.",
+  },
+  {
+    text: "Taller propio",
+    label: "fabricación y montaje con equipo de la empresa",
+  },
   { text: "Obra integral", label: "del movimiento de suelo a la cubierta" },
-  { text: "Norte argentino", label: "obras en distintas provincias de la región" },
+  {
+    text: "Compromiso asumido",
+    label: "Garantizamos la entrega de nuestros proyectos en tiempo y forma.",
+  },
 ] as const;

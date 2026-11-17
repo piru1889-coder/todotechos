@@ -1,5 +1,4 @@
 import { clients, infrastructure } from "@/content/company";
-import { projects } from "@/content/projects";
 import { services } from "@/content/services";
 import { slugForMedia } from "./slug";
 
@@ -29,22 +28,6 @@ export const mediaSlots: MediaSlot[] = [
     fallback: service.image,
     defaultFit: "cover" as const,
   })),
-  ...projects.flatMap((project) => [
-    {
-      key: `project.${project.slug}`,
-      section: "Obras",
-      label: `${project.title} — imagen principal`,
-      fallback: project.image,
-      defaultFit: "cover" as const,
-    },
-    ...(project.gallery ?? []).map((image, index) => ({
-      key: `project.${project.slug}.gallery.${index + 1}`,
-      section: "Obras",
-      label: `${project.title} — galería ${index + 1}`,
-      fallback: image.src,
-      defaultFit: "cover" as const,
-    })),
-  ]),
   ...clients.map((client) => ({
     key: `client.${slugForMedia(client.name)}`,
     section: "Clientes",

@@ -3,9 +3,9 @@
 import Link from "next/link";
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
-import { site } from "@/content/site";
+import { site, whatsappUrl } from "@/content/site";
 import { services } from "@/content/services";
-import { Flecha, ServicioIcono } from "./Icons";
+import { ServicioIcono, WhatsApp } from "./Icons";
 
 /* Pórticos de una nave en perspectiva: se dibujan solos al cargar y quedan
    de fondo hasta que el video del drone esté disponible. */
@@ -109,10 +109,10 @@ export function Hero() {
         </p>
 
         <div className="hero-entra mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap" style={{ "--i": 2 } as CSSProperties}>
-          <Link href="/contacto" className="btn btn-verde">
-            Solicitar presupuesto <Flecha />
-          </Link>
-          <Link href="/obras" className="btn btn-linea">
+          <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="btn btn-verde">
+            <WhatsApp width={20} height={20} /> Solicitar presupuesto
+          </a>
+          <Link href="/clientes" className="btn btn-linea">
             Ver proyectos
           </Link>
         </div>

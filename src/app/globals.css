@@ -354,6 +354,14 @@ body {
     transform: translateX(-50%);
   }
 }
+@keyframes workplace-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
 .cinta {
   display: flex;
   width: max-content;

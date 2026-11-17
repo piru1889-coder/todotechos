@@ -3,17 +3,13 @@ import { Hero } from "@/components/Hero";
 import { Reveal } from "@/components/Reveal";
 import { Photo } from "@/components/Photo";
 import { Flecha, ServicioIcono } from "@/components/Icons";
-import { Carril, Contador, Recursos } from "@/components/Interactivos";
-import { ClientsMarquee, CtaBand, ProjectCard } from "@/components/Bloques";
+import { ClientsMarquee, CtaBand } from "@/components/Bloques";
 import { indicators, site } from "@/content/site";
 import { services } from "@/content/services";
-import { projects } from "@/content/projects";
 import { infrastructure } from "@/content/company";
 
 export default function Inicio() {
   const destacados = services.filter((s) => s.featured);
-  const obras = projects.filter((p) => p.featured).slice(0, 6);
-
   return (
     <>
       <Hero />
@@ -131,15 +127,7 @@ export default function Inicio() {
                 className="border-tinta/12 px-1 py-8 sm:px-6 md:py-11 lg:border-l lg:first:border-l-0 [&:nth-child(even)]:border-l [&:nth-child(even)]:pl-5 max-lg:[&:nth-child(n+3)]:border-t"
               >
                 <p className="display text-[clamp(2rem,1.4rem+2.6vw,3.5rem)] text-verde-hondo">
-                  {"value" in ind ? (
-                    <Contador
-                      valor={ind.value}
-                      prefijo={ind.prefix}
-                      sufijo={ind.suffix}
-                    />
-                  ) : (
-                    ind.text
-                  )}
+                  {"value" in ind ? ind.value : ind.text}
                 </p>
                 <p className="mt-2 max-w-[22ch] text-[0.9875rem] leading-snug text-acero">
                   {ind.label}

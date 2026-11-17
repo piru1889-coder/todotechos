@@ -2,10 +2,11 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { nav, site, whatsappUrl } from "@/content/site";
 import { Logo } from "./Logo";
-import { Flecha, Telefono, WhatsApp } from "./Icons";
+import { Flecha, Telefono } from "./Icons";
 
 export function Header() {
   const pathname = usePathname();
@@ -75,12 +76,26 @@ export function Header() {
 
         <div className="flex items-center gap-3">
           <a
+            href={site.contact.instagram}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram de TODO TECHOS"
+            className={`grid h-11 w-11 place-items-center rounded-lg border transition-transform hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-verde ${
+              clara ? "border-linea bg-white" : "border-white/35 bg-black/10"
+            }`}
+          >
+            <Image src="/images/instagram-1-svgrepo-com.svg" alt="" width={26} height={26} />
+          </a>
+          <a
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn btn-verde !hidden !min-h-11 !px-5 !text-base sm:!inline-flex"
+            aria-label="WhatsApp de TODO TECHOS"
+            className={`grid h-11 w-11 place-items-center rounded-lg border transition-transform hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-verde ${
+              clara ? "border-linea bg-white" : "border-white/35 bg-black/10"
+            }`}
           >
-            <WhatsApp width={20} height={20} /> Solicitar cotización
+            <Image src="/images/whatsapp-symbol-logo-svgrepo-com.svg" alt="" width={26} height={26} />
           </a>
           <button
             type="button"
@@ -147,16 +162,27 @@ export function Header() {
           </ul>
         </nav>
         <div className="contenedor grid gap-3 pb-8">
-          <a
-            href={whatsappUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => setAbierto(false)}
-            className="btn btn-verde w-full"
-          >
-            <WhatsApp width={20} height={20} /> Solicitar cotización
-          </a>
           <div className="grid grid-cols-2 gap-3">
+            <a
+              href={site.contact.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setAbierto(false)}
+              className="btn btn-linea"
+            >
+              <Image src="/images/instagram-1-svgrepo-com.svg" alt="" width={22} height={22} />
+              Instagram
+            </a>
+            <a
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setAbierto(false)}
+              className="btn btn-verde"
+            >
+              <Image src="/images/whatsapp-symbol-logo-svgrepo-com.svg" alt="" width={22} height={22} />
+              WhatsApp
+            </a>
             <a href={site.contact.phoneHref} className="btn btn-linea">
               <Telefono width={20} height={20} /> Llamar
             </a>

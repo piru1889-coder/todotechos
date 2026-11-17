@@ -9,9 +9,6 @@ export default function NoEncontrada() {
         <Link href="/" className="btn btn-verde">
           Volver al inicio <Flecha />
         </Link>
-        <Link href="/obras" className="btn btn-linea">
-          Ver obras
-        </Link>
       </div>
     </PageHero>
   );
