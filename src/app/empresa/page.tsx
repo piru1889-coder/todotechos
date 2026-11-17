@@ -1,13 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { CtaBand, PageHero } from "@/components/Bloques";
-import { Flecha } from "@/components/Icons";
 import { Photo } from "@/components/Photo";
 import { Reveal } from "@/components/Reveal";
-import { infrastructure, milestones, values } from "@/content/company";
+import { milestones, values } from "@/content/company";
 import { services } from "@/content/services";
 import { site } from "@/content/site";
-import { slugForMedia } from "@/lib/slug";
 
 export const metadata: Metadata = {
   title: "Empresa",
@@ -72,32 +70,6 @@ export default function Empresa() {
               </Reveal>
             ))}
           </ol>
-        </div>
-      </section>
-
-      {/* Infraestructura */}
-      <section className="seccion" aria-labelledby="t-recursos">
-        <div className="contenedor">
-          <Reveal className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
-            <div>
-              <h2 id="t-recursos" className="titulo titulo-barra">
-                Con qué trabajamos
-              </h2>
-              <p className="bajada mt-4">Taller, equipos, logística y personal propios.</p>
-            </div>
-            <Link href="/infraestructura" className="enlace shrink-0">
-              Ver infraestructura <Flecha />
-            </Link>
-          </Reveal>
-          <ul className="mt-10 grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
-            {infrastructure.map((r, i) => (
-              <Reveal as="li" key={r.title} demora={i * 90}>
-                <Photo slot={`infra.${slugForMedia(r.title)}`} src={r.image} alt={r.title} variant={r.art} className="aspect-[4/3] w-full" sizes="(min-width: 1024px) 25vw, 50vw" />
-                <h3 className="mt-4 font-display text-2xl font-bold uppercase leading-none">{r.title}</h3>
-                <p className="mt-2 text-acero">{r.text}</p>
-              </Reveal>
-            ))}
-          </ul>
         </div>
       </section>
 
