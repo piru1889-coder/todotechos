@@ -85,8 +85,8 @@ export default function Inicio() {
               {site.about.intro}
             </p>
             <p className="mt-4 max-w-[54ch] text-acero">
-              Trabajamos con taller y equipos propios, y acompañamos cada obra
-              desde el primer movimiento de suelo hasta la entrega.
+              Trabajamos con taller, equipos y logística propia, y acompañamos
+              cada obra desde el primer movimiento de suelo hasta la entrega.
             </p>
             <Link href="/empresa" className="btn btn-tinta mt-8">
               Conocer la empresa <Flecha />
@@ -139,13 +139,14 @@ export default function Inicio() {
         </div>
       </section>
 
-      
-
       {/* 08 · Empresas que confían en nosotros */}
       <section className="seccion bg-chapa-clara" aria-labelledby="t-clientes">
         <div className="contenedor">
           <Reveal className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
-            <h2 id="t-clientes" className="titulo titulo-barra titulo-barra--sin-solape max-w-[18ch]">
+            <h2
+              id="t-clientes"
+              className="titulo titulo-barra titulo-barra--sin-solape max-w-[18ch]"
+            >
               Empresas que confían en nosotros
             </h2>
             <Link href="/clientes" className="enlace shrink-0">
